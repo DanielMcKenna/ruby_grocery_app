@@ -2,20 +2,28 @@
 # Arrays of items and an empty cart for the end user to put items into
 @store_items = [
   { item: 'apple', price: 1 },
-  { item: 'milk', price: 5 }
+  { item: 'milk', price: 3 },
+  { item: 'sour watermelons', price: 8 },
+  { item: 'chocolate', price: 13 }
 ]
 
 @user_cart = []
 
+
 # Here is a menu I created that will call out to other methods depending on where they choose to go
+def user_dollar_amount
+  puts "How much money are you willing to spend at the grocery store?"
+  @user_money = gets.strip.to_i
+  @user_string_money = @user_money.to_s
+end
 
 def main_menu
   puts "********************************************************"
-  puts 'Welcome to our grocery store! Select an option:'
+  puts "Welcome to our grocery store! you have a total of #{@user_string_money}.00 to spend. Select an option:"
   puts '1) Add items to cart'
   puts '2) View items in cart'
   puts '3) Remove items from cart'
-  puts '4) View total amount'
+  puts '4) Check Out'
   puts '5) Add new items to the store'
   puts '6) exit'
   puts "********************************************************"
@@ -114,4 +122,39 @@ def delete_item
 
 end
 
+def total_cost
+  # puts "This is the user cart: #{@user_cart}"
+  @checkout = []
+  @user_cart.each do |food|
+    # puts food[:price]
+    @checkout << food[:price]
+    # puts @checkout
+  end
+  @total = @checkout.sum
+  if @total > @user_money
+    puts "Sorry you do not have enough money Please remove some items or return to menu"
+    puts "1) Remove product from cart?"
+    puts "2) Return to main menu"
+    menu_input = gets.strip.to_i
+
+    if menu_input == 1
+      delete_item
+    elsif menu_input ==2
+      main_menu
+    else
+      puts "invalid entry going back to main menu"
+      main_menu
+    end
+  elsif @total <= @user_money
+    @money_difference = @user_money - @total
+    puts "Thank you for purchasing here you have a balance of #{@money_difference}.00 Thank you"
+    main_menu
+  else
+    puts "error hehehe you found me"
+    main_menu
+  end
+
+end
+
+user_dollar_amount
 main_menu
