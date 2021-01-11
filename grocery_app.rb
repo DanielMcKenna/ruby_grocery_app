@@ -57,4 +57,14 @@ def add_item_to_cart
     main_menu
 end
 
+def view_all_items
+  puts "Here is a list of all the products in your cart"
+
+  @user_cart.each_with_index do |product, index|
+    puts "#{index + 1}: #{product[:item]} - $#{product[:price]}.00"
+  end
+
+  main_menu
+end
+
 main_menu
