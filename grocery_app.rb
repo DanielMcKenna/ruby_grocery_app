@@ -51,10 +51,18 @@ def add_item_to_cart
     # this will take the index item the end user selected from the store items and push it to the user cart
     @user_cart << @store_items[item_input]
 
-    puts "Thank you if you want to add another item select 1 again"
-    puts "********************************************************"
+    puts "Would you like to add more products to your cart?"
+    puts "1) Yes"
+    puts "2) No"
+    menu_input = gets.strip.to_i
 
-    main_menu
+    if menu_input == 1
+      add_item_to_cart
+    elsif menu_input == 2
+      main_menu
+    else
+      puts "invalid input.... taking you back to the menu"
+    end
 end
 
 def view_all_items
@@ -64,7 +72,46 @@ def view_all_items
     puts "#{index + 1}: #{product[:item]} - $#{product[:price]}.00"
   end
 
-  main_menu
+  puts "Would you like to go back to the main menu?"
+  puts "1) Yes"
+  puts "2) No"
+  menu_input = gets.strip.to_i
+  
+  if menu_input == 1
+    main_menu
+  elsif menu_input == 2
+    view_all_items
+  else
+    puts "invalid entry... taking you back to the main menu"
+    main_menu
+  end
+
+end
+
+def delete_item
+  puts "which product would you like to remove from your cart?"
+
+  @user_cart.each_with_index do |product, index|
+    puts "#{index + 1}: #{product[:item]} - $#{product[:price]}.00"
+  end
+
+  item_input = gets.strip.to_i - 1
+  @user_cart.delete_at(item_input)
+
+  puts "Do you want to remove another product from your cart or go to the main menu?"
+  puts "1) Delete another item"
+  puts "2) To go back to the main menu"
+  menu_input = gets.strip.to_i
+
+  if menu_input == 1
+    delete_item
+  elsif menu_input == 2
+    main_menu
+  else
+    puts "invalid entry going back to main menu"
+    main_menu
+  end
+
 end
 
 main_menu
