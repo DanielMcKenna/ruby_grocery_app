@@ -70,6 +70,7 @@ def add_item_to_cart
       main_menu
     else
       puts "invalid input.... taking you back to the menu"
+      main_menu
     end
 end
 
@@ -148,12 +149,55 @@ def total_cost
   elsif @total <= @user_money
     @money_difference = @user_money - @total
     puts "Thank you for purchasing here you have a balance of #{@money_difference}.00 Thank you"
+    puts "Would you like to leave or continue purchasing?"
+    puts "1) Continue purchasing"
+    puts "2) leave you stingy scruge"
+    menu_input_2 = gets.strip.to_i
+    if menu_input_2 == 1
     main_menu
+    elsif menu_input_2 == 2
+      exit
+    else
+      puts "invalid input taking you back to the main menu"
+      main_menu
+    end
   else
     puts "error hehehe you found me"
     main_menu
   end
 
+end
+
+def add_item_store
+  @new_item = {}
+
+  puts "Store Owner Enter password:"
+  password_input = gets.strip
+  if password_input == "password:"
+
+    puts 'Add new item'
+    @new_item[:item] = gets.strip
+    puts 'Price of item'
+    @new_item[:price] = gets.strip.to_i
+
+    @store_items << @new_item
+
+    puts "Would you like to go to the main menu or keep adding items?"
+    puts "1) Continue adding new items to the store?"
+    puts "2) Return to the main menu"
+    menu_input = gets.strip.to_i
+    if menu_input == 1
+     add_item_store
+    elsif menu_input == 2
+      main_menu
+    else
+      "invalid input.... go back to main menu"
+      main_menu
+    end
+  else
+    puts "password incorrect i told you what to enter"
+    main_menu
+  end
 end
 
 user_dollar_amount
